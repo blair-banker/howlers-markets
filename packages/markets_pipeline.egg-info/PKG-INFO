@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: markets-pipeline
+Version: 0.1.0
+Requires-Dist: pydantic>=2.0
+Requires-Dist: apache-airflow>=2.7.0
+Requires-Dist: psycopg2-binary
+Requires-Dist: alembic
+Requires-Dist: pyyaml

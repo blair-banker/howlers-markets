@@ -1,0 +1,3 @@
+[console_scripts]
+migrate = alembic:upgrade
+seed-ontology = scripts.seed_ontology:main

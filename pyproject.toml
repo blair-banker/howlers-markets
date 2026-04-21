@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "markets-pipeline"
+version = "0.1.0"
+dependencies = [
+    "pydantic>=2.0",
+    "apache-airflow>=2.7.0",
+    "psycopg2-binary",
+    "alembic",
+    "pyyaml",
+]
+
+[tool.setuptools.packages.find]
+where = ["packages"]
+
+[tool.pytest.ini_options]
+testpaths = ["packages/*/tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+
+[project.scripts]
+migrate = "alembic:upgrade"
+seed-ontology = "scripts.seed_ontology:main"

@@ -1,0 +1,16 @@
+pyproject.toml
+src/markets_core/__init__.py
+src/markets_core/errors.py
+src/markets_core.egg-info/PKG-INFO
+src/markets_core.egg-info/SOURCES.txt
+src/markets_core.egg-info/dependency_links.txt
+src/markets_core.egg-info/requires.txt
+src/markets_core.egg-info/top_level.txt
+src/markets_core/domain/__init__.py
+src/markets_core/domain/observation.py
+src/markets_core/domain/ontology.py
+src/markets_core/domain/series.py
+src/markets_core/interfaces/__init__.py
+src/markets_core/interfaces/source.py
+src/markets_core/interfaces/store.py
+src/markets_core/interfaces/transform.py

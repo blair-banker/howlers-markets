@@ -1,0 +1,5 @@
+markets-core
+apache-airflow>=2.7.0
+psycopg2-binary
+alembic
+pyyaml
