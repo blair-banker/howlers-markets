@@ -21,3 +21,8 @@ class StorageError(MarketsCoreError):
 class ConfigurationError(MarketsCoreError):
     """Invalid configuration."""
     pass
+
+
+class InsufficientDataError(MarketsCoreError):
+    """Required data for classification was not available at the given as-of date."""
+    pass
