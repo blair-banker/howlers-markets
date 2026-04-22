@@ -21,6 +21,11 @@ testpaths = ["packages/*/tests"]
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"
+markers = [
+    "integration: marks tests that require external services (deselect with '-m \"not integration\"')",
+    "requires_fred_key: marks tests that require a FRED API key",
+    "slow: marks tests as slow",
+]
 
 [project.scripts]
 migrate = "alembic:upgrade"
