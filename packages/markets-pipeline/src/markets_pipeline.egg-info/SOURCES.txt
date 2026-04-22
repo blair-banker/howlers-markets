@@ -5,4 +5,17 @@ src/markets_pipeline.egg-info/SOURCES.txt
 src/markets_pipeline.egg-info/dependency_links.txt
 src/markets_pipeline.egg-info/requires.txt
 src/markets_pipeline.egg-info/top_level.txt
+src/markets_pipeline/classifiers/__init__.py
+src/markets_pipeline/classifiers/rule_based.py
 src/markets_pipeline/dags/__init__.py
+src/markets_pipeline/dags/classify.py
+src/markets_pipeline/dags/derive.py
+src/markets_pipeline/dags/ingest_fred.py
+src/markets_pipeline/dags/normalize.py
+src/markets_pipeline/sources/__init__.py
+src/markets_pipeline/sources/fred.py
+src/markets_pipeline/stores/__init__.py
+src/markets_pipeline/stores/parquet.py
+src/markets_pipeline/stores/timescale.py
+src/markets_pipeline/transforms/__init__.py
+src/markets_pipeline/transforms/zscore.py
