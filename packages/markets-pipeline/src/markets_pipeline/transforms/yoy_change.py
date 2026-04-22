@@ -5,17 +5,27 @@ from decimal import Decimal
 
 
 def compute_yoy_pct(
-    values: dict[date, Decimal], target: date, max_offset_days: int = 7
+    values: dict[date, Decimal], target: date, max_offset_days: int = 31
 ) -> Decimal | None:
     """Return (value[target] - value[target-365d]) / value[target-365d].
+
+    ``values`` may be sparse (e.g. monthly CPI).  If the exact target date
+    has no observation, search backward up to ``max_offset_days`` for the
+    most recent prior value (forward-fill semantics).
 
     If the exact 365-day-prior date is absent, search backward up to
     max_offset_days for the nearest prior observation.
     Returns None if target value or any eligible prior value is missing.
     """
-    if target not in values or values[target] is None:
+    # Forward-fill to target: find the most recent observation on or before target
+    current = None
+    for offset in range(0, max_offset_days + 1):
+        d = target - timedelta(days=offset)
+        if d in values and values[d] is not None:
+            current = values[d]
+            break
+    if current is None:
         return None
-    current = values[target]
     ideal = target - timedelta(days=365)
     for offset in range(0, max_offset_days + 1):
         d = ideal - timedelta(days=offset)

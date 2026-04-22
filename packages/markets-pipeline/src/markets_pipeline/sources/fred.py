@@ -33,7 +33,7 @@ class FredSource:
             raise ValueError(f"Series {series_id} is not a FRED series")
         
         try:
-            url = f"{self.base_url}/series/data"
+            url = f"{self.base_url}/series/observations"
             params = {
                 "series_id": series_id.native_id,
                 "api_key": self.api_key,
@@ -41,22 +41,18 @@ class FredSource:
                 "observation_start": start.isoformat(),
                 "observation_end": end.isoformat(),
             }
-            
-            response = requests.get(url, params=params, timeout=10)
+
+            response = requests.get(url, params=params, timeout=30)
             response.raise_for_status()
             data = response.json()
-            
+
             if "error_code" in data:
-                if data["error_code"] == 400:
+                if data["error_code"] in (400, 404):
                     raise SeriesNotFoundError(
-                        f"Series {series_id.native_id} not found at FRED",
-                        source="fred",
-                        series_id=str(series_id),
+                        f"Series {series_id.native_id} not found at FRED"
                     )
                 raise DataSourceError(
-                    f"FRED error: {data.get('error_message', 'unknown')}",
-                    source="fred",
-                    series_id=str(series_id),
+                    f"FRED error: {data.get('error_message', 'unknown')}"
                 )
             
             observations = data.get("observations", [])
@@ -79,16 +75,12 @@ class FredSource:
                 )
                 
         except requests.RequestException as e:
-            raise DataSourceError(
-                f"FRED request failed: {e}",
-                source="fred",
-                series_id=str(series_id),
-            ) from e
-    
+            raise DataSourceError(f"FRED request failed: {e}") from e
+
     def health_check(self) -> dict:
         """Verify API connectivity."""
         try:
-            url = f"{self.base_url}/series/data"
+            url = f"{self.base_url}/series/observations"
             params = {
                 "series_id": "DGS10",
                 "api_key": self.api_key,
@@ -119,11 +111,9 @@ class FredSource:
             
             if "error_code" in data:
                 raise SeriesNotFoundError(
-                    f"Series {series_id.native_id} not found",
-                    source="fred",
-                    series_id=str(series_id),
+                    f"Series {series_id.native_id} not found"
                 )
-            
+
             series = data.get("seriess", [{}])[0]
             return {
                 "title": series.get("title", ""),
@@ -131,8 +121,4 @@ class FredSource:
                 "frequency": series.get("frequency", ""),
             }
         except requests.RequestException as e:
-            raise DataSourceError(
-                f"FRED metadata request failed: {e}",
-                source="fred",
-                series_id=str(series_id),
-            ) from e
+            raise DataSourceError(f"FRED metadata request failed: {e}") from e
