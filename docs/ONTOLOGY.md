@@ -124,6 +124,12 @@ Named states of the market system. A classifier places the current state into on
 
 ### Named regimes in the initial definition set
 
+**Initial seeded set (as of migration 002):** `benign_expansion`,
+`monetary_tightening`, `monetary_easing`, `supply_shock`. The five remaining
+regimes below (`fiscal_dominance`, `funding_stress`, `emerging_market_crisis`,
+`institutional_shock`, `phase_transition`) are documented but not yet seeded;
+adding them is an additive ontology migration per the evolution policy.
+
 - **`benign_expansion`** — Tier 2 cluster couplings at normal strength, trending growth, anchored inflation expectations. Default state.
 
 - **`monetary_tightening`** — rates layer (4) leading. Dollar strength, risk-off in duration-sensitive assets, real rates rising. Q1 2022 canonical.

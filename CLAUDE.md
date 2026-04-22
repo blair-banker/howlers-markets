@@ -36,6 +36,7 @@ Read only what's relevant to your task. If unsure which applies, ask first.
 These exist because violating them silently corrupts data or breaks reproducibility. They are not style preferences.
 
 - **Never commit `.env` files or secrets.** API keys live only in `.env` (gitignored) or environment variables.
+- **No sub-daily data.** All series are stored at daily granularity or coarser. Market variables that natively trade intraday are stored as daily OHLC (open/high/low/close). Lower-frequency series (e.g., monthly CPI) remain at native frequency in storage and are forward-filled to daily only at the classifier/transform read boundary. Intraday data is never ingested.
 - **Raw storage is append-only.** Parquet files in `data/raw/` are immutable once written. Never modify; write a new vintage instead.
 - **Every observation carries both `observation_date` and `as_of_date`.** Point-in-time discipline is the foundation of honest backtesting. Dropping `as_of_date` is forbidden.
 - **Sources must pass the contract test suite.** New `Source` implementations are not merged until the shared contract tests pass against them.

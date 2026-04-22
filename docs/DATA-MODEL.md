@@ -198,6 +198,10 @@ CREATE TABLE ontology.regime_triggers (
 );
 ```
 
+Note: as of migration 002, `condition` is `jsonb`, not `text`. It holds a
+validated AST with node types `compare`, `compare_spread`, `all_of`, `any_of`.
+See [`docs/superpowers/specs/2026-04-22-stage-4-classifier-design.md`](superpowers/specs/2026-04-22-stage-4-classifier-design.md) §4.
+
 The matrix columns, depth rows, Tier 2 couplings, and regime definitions are seeded via `infrastructure/sql/seed/ontology.sql` at initial deployment. Changes to the framework go through migrations, giving the ontology a version history.
 
 ### `regimes` schema
@@ -220,6 +224,13 @@ CREATE TABLE regimes.regime_states (
 
 SELECT create_hypertable('regimes.regime_states', 'as_of_date');
 ```
+
+As of migration 002, `regime_states` has two additional columns:
+- `rationale_detail jsonb NOT NULL` — structured per-trigger breakdown produced by
+  the classifier. Schema documented in the Stage 4 design spec §5.2.
+- `ontology_version text NOT NULL` — the Alembic revision of the ontology used
+  to produce this row. Two rows with the same `(classifier_version, ontology_version)`
+  are guaranteed reproducible.
 
 ## Domain model (Pydantic)
 
