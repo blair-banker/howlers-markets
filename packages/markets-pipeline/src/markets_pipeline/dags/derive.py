@@ -21,7 +21,9 @@ derived_dataset = Dataset("s3://markets-derived")
 
 
 def _warehouse() -> TimescaleWarehouse:
-    dsn = os.environ.get("DATABASE_URL") or "postgresql://postgres:your_password_here@localhost:5432/markets"
+    dsn = os.environ.get("DATABASE_URL")
+    if not dsn:
+        raise RuntimeError("DATABASE_URL environment variable is required")
     return TimescaleWarehouse(dsn=dsn)
 
 
