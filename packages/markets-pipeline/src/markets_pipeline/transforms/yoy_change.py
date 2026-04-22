@@ -5,7 +5,7 @@ from decimal import Decimal
 
 
 def compute_yoy_pct(
-    values: dict[date, Decimal], target: date, max_offset_days: int = 31
+    values: dict[date, Decimal], target: date, max_offset_days: int = 90
 ) -> Decimal | None:
     """Return (value[target] - value[target-365d]) / value[target-365d].
 
